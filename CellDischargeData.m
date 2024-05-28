@@ -1,4 +1,7 @@
 classdef CellDischargeData
+
+    % battery discharge data %
+    
     properties
         time
         voltage
