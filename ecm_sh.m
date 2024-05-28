@@ -71,6 +71,19 @@ ocv_2C = ecm.ocv(soc_2C, v_pts, z_pts);
 vt_2C = ecm.vt2(dis_2C, soc_2C, ocv_2C, rctau);
 
 % plot
+figure;
+plot(dis_05C.time, dis_05C.voltage, '.', 'DisplayName', 'exp-0.5C');
+hold on;
+plot(dis_1C.time, dis_1C.voltage, '.', 'DisplayName', 'exp-1C');
+plot(dis_2C.time, dis_2C.voltage, '.', 'DisplayName', 'exp-2C');
+plot(dis_05C.time, vt_05C, 'DisplayName', 'ecm_0.5C');
+plot(dis_1C.time, vt_1C, 'DisplayName', 'ecm_1C');
+plot(dis_2C.time, vt_2C, 'DisplayName', 'ecm_2C');
+xlabel('Time [s]');
+ylabel('Voltage [V]');
+legend('Location', 'upper right');
+ylim([2.6, 4.5]);
+hold off;
 
 
 
