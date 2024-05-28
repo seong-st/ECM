@@ -4,7 +4,7 @@ close all;
 
 % data import
 % --------------------------------------------------------------
-file_hppc = 'data/HPPC_results.txt';
+file_hppc = 'data/HPPC_result.txt';
 
 file_dis_05C = 'data/exp_05c.txt';
 file_dis_1C = 'data/exp_1c.txt';
