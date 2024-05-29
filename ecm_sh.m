@@ -19,6 +19,7 @@ dis_2C = CellDischargeData.process_discharge_only(file_dis_2C);
 % Electrical model from HPPC cell data
 % --------------------------------------------------------------
 data = CellHppcData(file_hppc); %CellHppcData class 호출
+params = parameters(); %parameters 호출
 ecm = CellEcm(data, params); %CellEcm class 호출
 
 soc = ecm.soc(); 
