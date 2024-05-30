@@ -71,6 +71,10 @@ classdef CellEcm
             end
         end
         
+
+
+
+
         function [ocv, i_pts, t_pts, v_pts, z_pts] = ocv(obj, soc, pts, vz_pts)
             if nargin < 3
                 pts = false;
@@ -110,7 +114,7 @@ classdef CellEcm
                     i_pts = [i_pts; current_array(aa)];
                     t_pts = [t_pts; time_array(aa)];                
                     
-                    disp([num2str(v_pts)]);
+%                     disp([num2str(v_pts)]);
                 end
                 
 
@@ -121,7 +125,7 @@ classdef CellEcm
 
                 [z_pts, unique_idx] = unique(z_pts);
                 v_pts = v_pts(unique_idx);
-
+               
                 disp('After loop:');
                 disp(['v_pts: ', num2str(v_pts')]);
                 disp(['z_pts: ', num2str(z_pts')]);

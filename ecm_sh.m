@@ -27,13 +27,16 @@ ecm = CellEcm(data, params); %CellEcm class 호출
 % data.current = data.current(1:10:end);
 
 soc = ecm.soc(); 
-[v_pts, z_pts] = ecm.ocv(soc,true); %v_pts, z_pts값 반환
+[~,~,~,v_pts, z_pts] = ecm.ocv(soc,true); %v_pts, z_pts값 반환
 coeffs = ecm.curve_fit_coeff(@ecm.func_ttc,5); 
 rctau = ecm.rctau_ttc(coeffs);
 
+vz_pts = {v_pts, z_pts};
+
 % Hppc data 검증
 soc_hppc = ecm.soc();
-ocv_hppc = ecm.ocv(soc_hppc, v_pts, z_pts);
+[ocv_hppc,~,~,~,~] = ecm.ocv(soc_hppc, false, vz_pts);
+
 
 figure;
 plot(data.time, ocv_hppc, '.');
@@ -56,7 +59,8 @@ ecm.voltage = dis_05C.voltage;
 ecm.time = dis_05C.time;
 ecm.current = dis_05C.current;
 soc_05C = ecm.soc2(dis_05C);
-[ocv_05C, ~, ~, v_pts_05C, z_pts_05C] = ecm.ocv(soc_05C, true);
+[ocv_05C, ~, ~, ~, ~] = ecm.ocv(soc_05C, false, vz_pts);
+[~,~,~,v_pts_05C,z_pts_05C] = ecm.ocv(soc_05C, false, vz_pts);
 % ocv_05C = ecm.ocv(soc_05C, v_pts, z_pts);
 vt_05C = ecm.vt2(dis_05C, soc_05C, ocv_05C, rctau);
 
@@ -66,7 +70,9 @@ ecm.time = dis_1C.time;
 ecm.current = dis_1C.current;
 soc_1C = ecm.soc2(dis_1C);
 % ocv_1C = ecm.ocv(soc_1C, v_pts, z_pts);
-[ocv_1C, ~, ~, v_pts_1C, z_pts_1C] = ecm.ocv(soc_1C, true);
+[ocv_1C, ~, ~, ~, ~] = ecm.ocv(soc_1C, false, vz_pts);
+[~,~,~,v_pts_1C,z_pts_1C] = ecm.ocv(soc_1C, false, vz_pts);
+% [ocv_1C, ~, ~, v_pts_1C, z_pts_1C] = ecm.ocv(soc_1C, true);
 vt_1C = ecm.vt2(dis_1C, soc_1C, ocv_1C, rctau);
 
 % 2C -------------------------------------------
@@ -75,7 +81,9 @@ ecm.time = dis_2C.time;
 ecm.current = dis_2C.current;
 soc_2C = ecm.soc2(dis_2C);
 % ocv_2C = ecm.ocv(soc_2C, v_pts, z_pts);
-[ocv_2C, ~, ~, v_pts_2C, z_pts_2C] = ecm.ocv(soc_2C, true);
+[ocv_2C, ~, ~, ~, ~] = ecm.ocv(soc_2C, false, vz_pts);
+[~,~,~,v_pts_2C,z_pts_2C] = ecm.ocv(soc_2C, false, vz_pts);
+% [ocv_2C, ~, ~, v_pts_2C, z_pts_2C] = ecm.ocv(soc_2C, true);
 vt_2C = ecm.vt2(dis_2C, soc_2C, ocv_2C, rctau);
 
 % plot
@@ -84,9 +92,9 @@ plot(dis_05C.time, dis_05C.voltage, '.', 'DisplayName', 'exp-0.5C');
 hold on;
 plot(dis_1C.time, dis_1C.voltage, '.', 'DisplayName', 'exp-1C');
 plot(dis_2C.time, dis_2C.voltage, '.', 'DisplayName', 'exp-2C');
-plot(dis_05C.time, vt_05C, 'DisplayName', 'ecm_0.5C');
-plot(dis_1C.time, vt_1C, 'DisplayName', 'ecm_1C');
-plot(dis_2C.time, vt_2C, 'DisplayName', 'ecm_2C');
+plot(dis_05C.time, vt_05C, 'DisplayName', 'ecm-0.5C');
+plot(dis_1C.time, vt_1C, 'DisplayName', 'ecm-1C');
+plot(dis_2C.time, vt_2C, 'DisplayName', 'ecm-2C');
 xlabel('Time [s]');
 ylabel('Voltage [V]');
 legend('Location', 'best');
